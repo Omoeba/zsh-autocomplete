@@ -222,14 +222,14 @@ ${0}:precmd() {
       local -a reply=()
       local text=
 
-      builtin zstyle -s :autocomplete: timeout seconds ||
-          (( seconds = 0.4 ))
+      #builtin zstyle -s :autocomplete: timeout seconds ||
+          #(( seconds = 0.4 ))
 
       # WORKAROUND: #441 Directly using $(( [#10] … max( … ) )) leads to 0 in Zsh 5.9, as the result
       # of max() gets converted to an integer _before_ being multiplied.
-      local -i timeout=$(( 100 * max( 0, seconds - SECONDS ) ))
+      #local -i timeout=$(( 100 * max( 0, seconds - SECONDS ) ))
 
-      if zselect -rt $timeout "$fd"; then
+      if zselect -r "$fd"; then
         zpty -r AUTOCOMPLETE text $'*\C-B'
       else
         # Press ^C twice: Once to abort completion, then once to abort the command line.
